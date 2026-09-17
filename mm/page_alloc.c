@@ -693,6 +693,14 @@ static inline void del_page_from_free_list(struct page *page, struct zone *zone,
 	zone->free_area[order].nr_free--;
 }
 
+#ifdef CONFIG_RAMPAGE_MEMORY_TEST
+unsigned long mm_page_order(struct page *page)
+{
+	return buddy_order(page);
+}
+EXPORT_SYMBOL_GPL(mm_page_order);
+#endif
+
 static inline struct page *get_page_from_free_area(struct free_area *area,
 					    int migratetype)
 {
@@ -1399,6 +1407,15 @@ static inline void expand(struct zone *zone, struct page *page,
 		set_buddy_order(&page[size], high);
 	}
 }
+
+#ifdef CONFIG_RAMPAGE_MEMORY_TEST
+void mm_buddy_expand(struct zone *zone, struct page *page,
+		     int low, int high, int migratetype)
+{
+	expand(zone, page, low, high, migratetype);
+}
+EXPORT_SYMBOL_GPL(mm_buddy_expand);
+#endif
 
 static void check_new_page_bad(struct page *page)
 {

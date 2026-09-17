@@ -781,6 +781,17 @@ config MEMORY_FAILURE
 	  even when some of its memory has uncorrected errors. This requires
 	  special hardware support and typically ECC memory.
 
+config RAMPAGE_MEMORY_TEST
+	bool "RAMpage online physical memory testing support"
+	depends on MMU && MODULES && MEMCG
+	help
+	  Export the small set of memory-management interfaces required by the
+	  RAMpage phys_mem module to claim free buddy pages for online testing.
+
+	  This option does not perform memory testing by itself.  It exposes
+	  low-level allocator internals to GPL modules and should only be enabled
+	  on systems that run the trusted RAMpage phys_mem module.
+
 config HWPOISON_INJECT
 	tristate "HWPoison pages injector"
 	depends on MEMORY_FAILURE && DEBUG_KERNEL && PROC_FS

@@ -1319,6 +1319,12 @@ void put_pages_list(struct list_head *pages);
 void split_page(struct page *page, unsigned int order);
 void folio_copy(struct folio *dst, struct folio *src);
 
+#ifdef CONFIG_RAMPAGE_MEMORY_TEST
+unsigned long mm_page_order(struct page *page);
+void mm_buddy_expand(struct zone *zone, struct page *page,
+		     int low, int high, int migratetype);
+#endif
+
 unsigned long nr_free_buffer_pages(void);
 
 /* Returns the number of bytes in this potentially compound page. */
